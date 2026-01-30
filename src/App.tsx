@@ -30,10 +30,6 @@ function App() {
   // TODO: Cleaner alternative to enums. Tired of this keyof typeof nonsense AGAIN
   const [pomodoroState, setPomodoroState] = useState<typeof PomodoroState[keyof typeof PomodoroState]>(PomodoroState.Waiting);
 
-  const onStart = () => {
-    setPomodoroState(PomodoroState.Focus);
-  };
-
   useEffect(() => {
     if (pomodoroState === PomodoroState.Waiting) {
       if (intervalRef.current) {
@@ -47,7 +43,6 @@ function App() {
     intervalRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          console.log("complete");
           return 0;
         }
         return prev - 1
@@ -82,6 +77,9 @@ function App() {
     }
   }
 
+  const start = () => setPomodoroState(PomodoroState.Focus);
+  const pause = () => setPomodoroState(PomodoroState.Waiting);
+
   return (
     <>
       <div>
@@ -90,8 +88,8 @@ function App() {
       <div>{pomodoroState}</div>
       <div>{new Date(timeLeft * 1000).toISOString().slice(14, 19)}</div>
       {/*pomodoroState === PomodoroState.Waiting && <PomodoroForm formState={formState} setFormState={setFormState} />*/}
-      <button onClick={() => setPomodoroState(PomodoroState.Focus)}>Start</button>
-      <button onClick={() => setPomodoroState(PomodoroState.Waiting)}>Pause</button>
+      <button onClick={start}>Start</button>
+      <button onClick={pause}>Pause</button>
       <button onClick={skip}>Skip</button>
       <button onClick={reset}>Reset</button>
     </>
