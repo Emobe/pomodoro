@@ -13,10 +13,10 @@ function App() {
   });
 
   const PomodoroState = {
-    Waiting: 'waiting',
-    Focus: 'focus',
-    OnShortBreak: 'onShortBreak',
-    OnLongBreak: 'onLongBreak',
+    Waiting: 'Waiting',
+    Focus: 'Focus',
+    OnShortBreak: 'Short Break',
+    OnLongBreak: 'Long Break',
   } as const;
 
   const FOCUS_TIME = formState.pomodoroTime * 60; // in seconds
@@ -82,11 +82,12 @@ function App() {
 
   return (
     <>
-      <div>
-        Tomato here
+      <div className="status">
+        {pomodoroState}
       </div>
-      <div>{pomodoroState}</div>
-      <div>{new Date(timeLeft * 1000).toISOString().slice(14, 19)}</div>
+      <div className="timer">
+        {new Date(timeLeft * 1000).toISOString().slice(14, 19)}
+      </div>
       {/*pomodoroState === PomodoroState.Waiting && <PomodoroForm formState={formState} setFormState={setFormState} />*/}
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
